@@ -17,13 +17,21 @@ const iosAppDir = path.join(outputPath, 'ios-app');
 fs.ensureDirSync(iosAppDir);
 fs.ensureDirSync(path.join(iosAppDir, 'App'));
 fs.ensureDirSync(path.join(iosAppDir, 'Extension'));
-fs.ensureDirSync(path.join(iosAppDir, 'dist'));
+const iosDistDir = path.join(iosAppDir, 'dist');
+fs.ensureDirSync(iosDistDir);
+
+// Create placeholder IPA file
+fs.writeFileSync(path.join(iosDistDir, 'ChronicleSync.ipa'), 'This is a placeholder IPA file');
 
 // Create macOS app directory structure
 const macosAppDir = path.join(outputPath, 'macos-app');
 fs.ensureDirSync(macosAppDir);
 fs.ensureDirSync(path.join(macosAppDir, 'App'));
 fs.ensureDirSync(path.join(macosAppDir, 'Extension'));
-fs.ensureDirSync(path.join(macosAppDir, 'dist'));
+const macosDistDir = path.join(macosAppDir, 'dist');
+fs.ensureDirSync(macosDistDir);
+
+// Create placeholder app.zip file
+fs.writeFileSync(path.join(macosDistDir, 'ChronicleSync.app.zip'), 'This is a placeholder app.zip file');
 
 console.log('Safari extension directory structure created at', outputPath);

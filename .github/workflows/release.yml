@@ -66,5 +66,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ github.event.inputs.example_dir || 'example' }}/safari-extension/ios-app/dist/*.ipa
-            ${{ github.event.inputs.example_dir || 'example' }}/safari-extension/macos-app/dist/*.app.zip
+            ${{ github.event.inputs.example_dir || 'example' }}/safari-extension/ios-app/dist/
+            ${{ github.event.inputs.example_dir || 'example' }}/safari-extension/macos-app/dist/
