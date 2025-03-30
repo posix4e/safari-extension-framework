@@ -4,6 +4,7 @@ module.exports = {
     node: true,
     browser: true,
     es2021: true,
+    commonjs: true,
   },
   extends: [
     'eslint:recommended',
@@ -13,6 +14,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
+    allowImportExportEverywhere: true,
   },
   plugins: [
     '@typescript-eslint',
@@ -22,14 +24,24 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     'quotes': ['error', 'single', { 'allowTemplateLiterals': true }],
     'semi': ['error', 'always'],
-    'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
+    'no-console': 'off', // Allow console statements in development code
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-var-requires': 'off', // Allow require statements
   },
   ignorePatterns: [
     'node_modules/',
     'lib/',
     'dist/',
     '*.d.ts',
+    'example/safari-extension/',
   ],
+  overrides: [
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      }
+    }
+  ]
 };
