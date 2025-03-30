@@ -7,7 +7,7 @@ package-lock.json
 yarn.lock
 
 # TypeScript
-lib/
+# lib/ - Temporarily allowing lib for CI
 dist/
 *.tsbuildinfo
 
@@ -51,7 +51,8 @@ dist/
 *.zip
 
 # Example output
-example/safari-extension/
+# Uncomment the line below to ignore example output
+# example/safari-extension/
 
 # Environment variables
 .env
