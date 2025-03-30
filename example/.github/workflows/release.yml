@@ -1,0 +1,57 @@
+name: Release Safari Extension
+
+on:
+  release:
+    types: [ created ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number'
+        required: true
+        default: ''
+
+jobs:
+  release:
+    runs-on: macos-latest
+    env:
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+      APPLE_API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
+      APPLE_API_KEY_CONTENT: ${{ secrets.APPLE_API_KEY_CONTENT }}
+      
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Set version
+        if: github.event.inputs.version != ''
+        run: |
+          npm version ${{ github.event.inputs.version }} --no-git-tag-version
+          sed -i '' 's/"version": "[^"]*"/"version": "${{ github.event.inputs.version }}"/' safari-extension.config.js
+      
+      - name: Convert extension
+        run: npm run convert
+      
+      - name: Build and sign for TestFlight
+        if: env.APPLE_TEAM_ID != ''
+        run: npm run build:testflight
+      
+      - name: Build macOS app
+        run: npm run build:macos
+      
+      - name: Upload artifacts to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            safari-extension/ios-app/dist/*.ipa
+            safari-extension/macos-app/dist/*.app.zip

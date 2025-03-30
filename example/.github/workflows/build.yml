@@ -1,0 +1,43 @@
+name: Build Safari Extension
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Convert extension
+        run: npm run convert
+      
+      - name: Build unsigned IPA
+        run: npm run build:ios
+      
+      - name: Build macOS app
+        run: npm run build:macos
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: safari-extension
+          path: |
+            safari-extension/ios-app/dist/*.ipa
+            safari-extension/macos-app/dist/*.app.zip
+          retention-days: 7

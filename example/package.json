@@ -1,0 +1,13 @@
+{
+  "name": "safari-extension-example",
+  "version": "1.0.0",
+  "description": "Example Safari extension project",
+  "scripts": {
+    "convert": "node ../bin/safari-convert.js ../chroniclesync/extension --output ./safari-extension",
+    "build:ios": "cd safari-extension/ios-app && ../../../scripts/build-unsigned-ipa.sh ChronicleSync",
+    "build:macos": "cd safari-extension/macos-app && ../../../scripts/build-macos-app.sh ChronicleSync",
+    "build:testflight": "cd safari-extension/ios-app && ../../../scripts/build-testflight-ipa.sh ChronicleSync $APPLE_TEAM_ID"
+  },
+  "author": "",
+  "license": "MIT"
+}
