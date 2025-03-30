@@ -1,6 +1,6 @@
 # Safari Extension Framework
 
-A framework for converting Chrome extensions to Safari extensions for macOS and iOS.
+A framework for converting Chrome extensions to Safari extensions for macOS and iOS. This framework makes it easy to build, test, and distribute Safari extensions.
 
 ## Features
 
