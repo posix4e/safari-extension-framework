@@ -109,6 +109,8 @@ The framework includes GitHub Actions workflows for CI/CD:
 - `test.yml`: Tests the Safari extension on macOS
 - `release.yml`: Creates a release with signed IPA and macOS app
 
+These workflows are configured to work with the example directory by default, but can be customized to work with any project structure. The workflows include parameters to specify which directory to build and release.
+
 ## iOS Testing
 
 To test the Safari extension on iOS:

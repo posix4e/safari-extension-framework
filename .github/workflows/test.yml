@@ -1,0 +1,31 @@
+name: Test Safari Extension Framework
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package.json'
+      
+      - name: Install dependencies
+        working-directory: ${{ github.workspace }}
+        run: npm install
+      
+      - name: Run linting
+        run: npm run lint || true
+      
+      - name: Run tests
+        run: npm test

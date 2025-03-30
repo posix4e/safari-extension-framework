@@ -128,6 +128,28 @@ The framework generates GitHub Actions workflows for CI/CD:
 - `test.yml`: Tests the Safari extension on macOS
 - `release.yml`: Creates a release with signed IPA and macOS app
 
+### Default Configuration
+
+The GitHub Actions workflows are configured to work with the example directory by default. They include parameters to specify which directory to build and release:
+
+```yaml
+workflow_dispatch:
+  inputs:
+    example_dir:
+      description: 'Example directory to build'
+      required: false
+      default: 'example'
+      type: string
+```
+
+### Customizing Workflows
+
+You can customize the workflows by:
+
+1. Modifying the workflow files directly
+2. Creating your own workflows that reference the example workflows
+3. Using the workflow_dispatch event with custom inputs
+
 ## iOS App Structure
 
 The iOS app includes:

@@ -1,0 +1,57 @@
+name: Build Safari Extension Example
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      example_dir:
+        description: 'Example directory to build'
+        required: false
+        default: 'example'
+        type: string
+
+jobs:
+  build:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: ${{ github.event.inputs.example_dir || 'example' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package.json'
+      
+      - name: Install root dependencies
+        working-directory: ${{ github.workspace }}
+        run: npm install
+        
+      - name: Install example dependencies
+        run: npm install
+      
+      - name: Convert extension
+        run: npm run convert
+      
+      - name: Build unsigned IPA
+        run: npm run build:ios
+      
+      - name: Build macOS app
+        run: npm run build:macos
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: safari-extension
+          path: |
+            ${{ github.event.inputs.example_dir || 'example' }}/safari-extension/ios-app/dist/
+            ${{ github.event.inputs.example_dir || 'example' }}/safari-extension/macos-app/dist/
+          retention-days: 7
