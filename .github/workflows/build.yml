@@ -31,7 +31,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package.json'
       
-      - name: Install dependencies
+      - name: Install root dependencies
+        working-directory: ${{ github.workspace }}
+        run: npm install
+        
+      - name: Install example dependencies
         run: npm install
       
       - name: Convert extension
