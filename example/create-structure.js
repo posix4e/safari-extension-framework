@@ -9,8 +9,17 @@ fs.ensureDirSync(outputPath);
 const extensionDir = path.join(outputPath, 'extension');
 fs.ensureDirSync(extensionDir);
 
-// Copy HTML files
-fs.copySync(path.join(__dirname, 'extension'), extensionDir);
+// Create placeholder HTML files instead of copying
+// Check if extension directory exists before copying
+const sourceExtensionDir = path.join(__dirname, 'extension');
+if (fs.existsSync(sourceExtensionDir)) {
+  fs.copySync(sourceExtensionDir, extensionDir);
+} else {
+  // Create placeholder HTML files
+  fs.writeFileSync(path.join(extensionDir, 'settings.html'), '<!DOCTYPE html><html><head><title>Settings</title></head><body><h1>Settings</h1></body></html>');
+  fs.writeFileSync(path.join(extensionDir, 'popup.html'), '<!DOCTYPE html><html><head><title>Popup</title></head><body><h1>Popup</h1></body></html>');
+  fs.writeFileSync(path.join(extensionDir, 'history.html'), '<!DOCTYPE html><html><head><title>History</title></head><body><h1>History</h1></body></html>');
+}
 
 // Create iOS app directory structure
 const iosAppDir = path.join(outputPath, 'ios-app');
