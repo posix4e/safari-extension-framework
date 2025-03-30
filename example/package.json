@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "Example Safari extension project",
   "scripts": {
-    "convert": "node ../bin/safari-convert.js ../chroniclesync/extension --output ./safari-extension",
+    "convert": "node ../bin/safari-convert.js ../chroniclesync/extension --output ./safari-extension --config ./safari-extension.config.js",
     "build:ios": "cd safari-extension/ios-app && ../../../scripts/build-unsigned-ipa.sh ChronicleSync",
     "build:macos": "cd safari-extension/macos-app && ../../../scripts/build-macos-app.sh ChronicleSync",
-    "build:testflight": "cd safari-extension/ios-app && ../../../scripts/build-testflight-ipa.sh ChronicleSync $APPLE_TEAM_ID"
+    "build:testflight": "cd safari-extension/ios-app && ../../../scripts/build-testflight-ipa.sh ChronicleSync $APPLE_TEAM_ID",
+    "build": "npm run convert && npm run build:ios && npm run build:macos",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "author": "",
   "license": "MIT"
